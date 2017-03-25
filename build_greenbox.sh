@@ -23,20 +23,20 @@ docker images | grep greenbox
 
 
 echo "building docker apps image"
-./build.sh docker
+./build.sh docker green
 
 echo 0fb3d0dbf74aa18783a95ccd2dc05c24b94633662b55194d7b16e665a4ed3f51 > bintray_api_key
 
-echo "build docker_xyz.tar.xz"
 APP=docker
 VER=`cat DOCKER_VERSION`
+echo "build and upload to bintray docker_$VER.tar.xz"
 rm -rf $APP
 ./upload_app.sh $APP $VER J
 
 
-echo "build green_xyz.tar.xz"
 APP=green
 VER=`cat apps/green/VERSION`
+echo "build and upload to bintray green_$VER.tar.xz"
 rm -rf $APP
 ./upload_app.sh $APP $VER  J
 
