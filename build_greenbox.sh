@@ -17,6 +17,7 @@ git checkout apps_modular -f
 git pull
 ./build.sh greenbox 
 
+./create_greenbox_iso.sh
 
 echo "this image is going to be base for apps"
 
@@ -47,5 +48,6 @@ APP=VirtualBox
 
 
 rm bintray_api_key
+mv greenbox*.iso ..
 
 echo == jenkins build greenbox end ==
