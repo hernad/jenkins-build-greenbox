@@ -10,6 +10,8 @@ fi
 
 git clone https://github.com/hernad/greenbox.git
 
+cp bintray_api_key/greenbox
+
 cd greenbox
 git checkout apps_modular -f
 git pull
@@ -24,8 +26,6 @@ docker images | grep greenbox
 
 echo "building docker apps image"
 ./build.sh docker green
-
-echo 0fb3d0dbf74aa18783a95ccd2dc05c24b94633662b55194d7b16e665a4ed3f51 > bintray_api_key
 
 APP=docker
 VER=`cat DOCKER_VERSION`
@@ -45,7 +45,7 @@ VER=`cat VBOX_VERSION`
 APP=VirtualBox
 ./upload_app.sh $APP ${VER} J  #.tar.xz
 
-rm bintray_api_key
 
+rm bintray_api_key
 
 echo == jenkins build greenbox end ==
