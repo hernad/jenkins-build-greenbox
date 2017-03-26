@@ -10,14 +10,18 @@ fi
 
 git clone https://github.com/hernad/greenbox.git
 
-mv bintray_api_key/greenbox
-
 cd greenbox
 git checkout apps_modular -f
 git pull
+
+echo getting bintray_api_key from jenkins home
+mv ../bintray_api_key .
+
 ./build.sh greenbox 
 
 ./create_greenbox_iso.sh
+echo moving iso to jenkins home
+mv greenbox*.iso ..
 
 echo "this image is going to be base for apps"
 
@@ -48,6 +52,5 @@ APP=VirtualBox
 
 
 rm bintray_api_key
-mv greenbox*.iso ..
 
 echo == jenkins build greenbox end ==
