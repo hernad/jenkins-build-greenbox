@@ -10,7 +10,7 @@ fi
 
 git clone https://github.com/hernad/greenbox.git
 
-cp bintray_api_key/greenbox
+mv bintray_api_key/greenbox
 
 cd greenbox
 git checkout apps_modular -f
