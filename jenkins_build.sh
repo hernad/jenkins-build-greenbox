@@ -13,6 +13,7 @@ git clone https://github.com/hernad/greenbox.git
 cd greenbox
 git checkout apps_modular -f
 git pull
+git log -1
 
 echo getting bintray_api_key from jenkins home
 mv ../bintray_api_key .
