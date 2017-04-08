@@ -30,13 +30,28 @@ docker images | grep greenbox
 
 
 echo "building docker apps image"
-./build.sh docker green
+./build.sh docker
+if [ $? != 0 ] ; then
+   echo "build docker ERROR"
+   exit 1
+fi
+
+./build.sh green
+if [ $? != 0 ] ; then
+   echo "build green ERROR"
+   exit 1
+fi
+
 
 APP=docker
 VER=`cat DOCKER_VERSION`
 echo "build and upload to bintray docker_$VER.tar.xz"
 rm -rf $APP
 ./upload_app.sh $APP $VER J
+if [ $? != 0 ] ; then
+   echo "upload $APP ERROR"
+   exit 1
+fi
 
 
 APP=green
@@ -44,11 +59,20 @@ VER=`cat apps/green/VERSION`
 echo "build and upload to bintray green_$VER.tar.xz"
 rm -rf $APP
 ./upload_app.sh $APP $VER  J
+if [ $? != 0 ] ; then
+   echo "upload $APP ERROR"
+   exit 1
+fi
 
 
 VER=`cat VBOX_VERSION`
 APP=VirtualBox
 ./upload_app.sh $APP ${VER} J  #.tar.xz
+if [ $? != 0 ] ; then
+   echo "upload $APP ERROR"
+   exit 1
+fi
+
 
 
 rm bintray_api_key
