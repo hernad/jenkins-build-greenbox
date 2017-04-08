@@ -18,7 +18,7 @@ git log -1
 echo getting bintray_api_key from jenkins home
 mv ../bintray_api_key .
 
-./build.sh greenbox 
+./build.sh greenbox
 
 ./create_greenbox_iso.sh
 echo moving iso to jenkins home
@@ -50,7 +50,7 @@ if [ $? != 0 ] ; then
   fi
 
 else
-  echo "$APP / $VER exits
+  echo "$APP / $VER exits"
 fi
 
 APP=green
@@ -74,7 +74,7 @@ if [ $? != 0 ] ; then
   fi
 
 else
-  echo "$APP / $VER exits
+  echo "$APP / $VER exits"
 fi
 
 
@@ -91,9 +91,8 @@ if [ $? != 0 ] ; then
      exit 1
   fi
 else
-  echo "$APP / $VER exits
+  echo "$APP / $VER exits"
 fi
 
 
 rm bintray_api_key
-
