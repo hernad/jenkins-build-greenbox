@@ -29,27 +29,18 @@ echo "this image is going to be base for apps"
 docker tag greenbox greenbox:for_apps
 docker images | grep greenbox
 
-
-echo "building docker apps image"
-./build.sh docker
-if [ $? != 0 ] ; then
-   echo "build docker ERROR"
-   exit 1
-fi
-
-./build.sh green
-if [ $? != 0 ] ; then
-   echo "build green ERROR"
-   exit 1
-fi
-
 APP=docker
 VER=`cat DOCKER_VERSION`
 ./bintray_check_is_app_exists.sh $APP $VER
 
-
 if [ $? != 0 ] ; then
 
+   echo "building docker apps image"
+   ./build.sh docker
+   if [ $? != 0 ] ; then
+   echo "build docker ERROR"
+      exit 1
+  fi
   echo "build and upload to bintray docker_$VER.tar.xz"
   rm -rf $APP
   ./upload_app.sh $APP $VER J
@@ -62,12 +53,17 @@ else
   echo "$APP / $VER exits
 fi
 
-
 APP=green
 VER=`cat apps/green/VERSION`
 ./bintray_check_is_app_exists.sh $APP $VER
 
 if [ $? != 0 ] ; then
+
+  ./build.sh green
+  if [ $? != 0 ] ; then
+      echo "build green ERROR"
+      exit 1
+  fi
 
   echo "build and upload to bintray green_$VER.tar.xz"
   rm -rf $APP
@@ -101,4 +97,3 @@ fi
 
 rm bintray_api_key
 
-echo == jenkins build greenbox end ==
