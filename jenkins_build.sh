@@ -27,7 +27,7 @@ mv greenbox*.iso ..
 echo "this image is going to be base for apps"
 
 docker tag greenbox greenbox:for_apps
-docker images | grep greenbox
+docker images greenbox
 
 APP=docker
 VER=`cat DOCKER_VERSION`
