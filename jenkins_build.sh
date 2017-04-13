@@ -23,7 +23,7 @@ mv ../bintray_api_key .
 ./create_greenbox_iso.sh
 echo moving iso to jenkins home
 cp GREENBOX_VERSION ..
-mv greenbox.iso ../greenbox-$(cat GREENBOX_VERSION).iso
+cp greenbox.iso ../greenbox-$(cat GREENBOX_VERSION).iso
 
 echo "this image is going to be base for apps"
 
@@ -79,7 +79,6 @@ if [ $? != 0 ] ; then
 else
   echo "$APP / $VER exits"
 fi
-
 
 
 VER=`cat VBOX_VERSION`
