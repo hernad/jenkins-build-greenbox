@@ -44,6 +44,7 @@ if [ $? != 0 ] ; then
   echo "build and upload to bintray docker_$VER.tar.xz"
   rm -rf $APP
   ./upload_app.sh $APP $VER J
+  ./bintray_check_is_app_exists.sh $APP $VER
   if [ $? != 0 ] ; then
     echo "upload $APP ERROR"
     exit 1
@@ -68,6 +69,7 @@ if [ $? != 0 ] ; then
   echo "build and upload to bintray green_$VER.tar.xz"
   rm -rf $APP
   ./upload_app.sh $APP $VER  J
+  ./bintray_check_is_app_exists.sh $APP $VER
   if [ $? != 0 ] ; then
      echo "upload $APP ERROR"
      exit 1
@@ -84,8 +86,8 @@ APP=VirtualBox
 ./bintray_check_is_app_exists.sh $APP $VER
 
 if [ $? != 0 ] ; then
-
   ./upload_app.sh $APP ${VER} J  #.tar.xz
+  ./bintray_check_is_app_exists.sh $APP $VER
   if [ $? != 0 ] ; then
      echo "upload $APP ERROR"
      exit 1
