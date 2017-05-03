@@ -2,18 +2,18 @@
 
 uname -a
 
-PROXY=`docker inspect --format '{{ .State.Status }}' apt-cacher-ng`
-
-if [ X$PROXY != Xrunning ] ; then
-   ./run_proxy.sh
-fi
-
 git clone https://github.com/hernad/greenbox.git
 
 cd greenbox
 git checkout apps_modular -f
 git pull
 git log -1
+
+PROXY=`docker inspect --format '{{ .State.Status }}' apt-cacher-ng`
+
+if [ X$PROXY != Xrunning ] ; then
+   ./run_proxy.sh
+fi
 
 echo getting bintray_api_key from jenkins home
 mv ../bintray_api_key .
