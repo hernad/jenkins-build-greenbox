@@ -116,5 +116,6 @@ fi
 
 build_app green
 build_app k8s
+build_app python2
 
 rm bintray_api_key
