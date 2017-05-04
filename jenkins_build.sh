@@ -2,9 +2,10 @@
 
 uname -a
 
-git clone https://github.com/hernad/greenbox.git
+[ -d greenbox ] || git clone https://github.com/hernad/greenbox.git
 
 cd greenbox
+cp ../.ssh_download_key .
 git checkout apps_modular -f
 git pull
 git log -1
@@ -27,6 +28,11 @@ fi
 ./create_greenbox_iso.sh
 echo moving iso to jenkins home
 cp GREENBOX_VERSION ..
+
+./push_iso_boot_to_tftp_server.sh
+rm .ssh_download_key
+
+
 cp greenbox.iso ../greenbox-$(cat GREENBOX_VERSION).iso
 
 echo "this image is going to be base for apps"
@@ -34,6 +40,7 @@ echo "this image is going to be base for apps"
 docker tag greenbox greenbox:for_apps
 docker images greenbox
 
+echo ======================= docker app ===========================
 APP=docker
 VER=`cat DOCKER_VERSION`
 ./bintray_check_is_app_exists.sh $APP $VER
