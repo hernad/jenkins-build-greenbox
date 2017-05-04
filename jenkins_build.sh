@@ -4,6 +4,38 @@ uname -a
 
 [ -d greenbox ] || git clone https://github.com/hernad/greenbox.git
 
+
+function build_app() {
+
+APP=$1
+VER=`cat apps/$APP/VERSION`
+./bintray_check_is_app_exists.sh $APP $VER
+
+if [ $? != 0 ] ; then
+
+  echo === building $APP / $VER ==============
+  ./build.sh $APP
+  if [ $? != 0 ] ; then
+      echo "build $APP ERROR"
+      exit 1
+  fi
+
+  echo "build and upload to bintray $APP_$VER.tar.xz"
+  rm -rf $APP
+  ./upload_app.sh $APP $VER  J
+  ./bintray_check_is_app_exists.sh $APP $VER
+  if [ $? != 0 ] ; then
+     echo "upload $APP ERROR"
+     exit 1
+  fi
+
+else
+  echo "$APP / $VER exits"
+fi
+
+}
+
+
 cd greenbox
 cp ../.ssh_download_key .
 git checkout apps_modular -f
@@ -66,31 +98,6 @@ else
   echo "$APP / $VER exits"
 fi
 
-APP=green
-VER=`cat apps/green/VERSION`
-./bintray_check_is_app_exists.sh $APP $VER
-
-if [ $? != 0 ] ; then
-
-  ./build.sh green
-  if [ $? != 0 ] ; then
-      echo "build green ERROR"
-      exit 1
-  fi
-
-  echo "build and upload to bintray green_$VER.tar.xz"
-  rm -rf $APP
-  ./upload_app.sh $APP $VER  J
-  ./bintray_check_is_app_exists.sh $APP $VER
-  if [ $? != 0 ] ; then
-     echo "upload $APP ERROR"
-     exit 1
-  fi
-
-else
-  echo "$APP / $VER exits"
-fi
-
 
 VER=`cat VBOX_VERSION`
 APP=VirtualBox
@@ -107,5 +114,7 @@ else
   echo "$APP / $VER exits"
 fi
 
+build_app green
+build_app k8s
 
 rm bintray_api_key
