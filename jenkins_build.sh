@@ -67,6 +67,8 @@ rm .ssh_download_key
 
 cp greenbox.iso ../greenbox-$(cat GREENBOX_VERSION).iso
 
+sha256sum greenbox.iso | awk '{print $1}' > ../greenbox-$(cat GREENBOX_VERSION).iso.sha256sum
+
 echo "this image is going to be base for apps"
 
 docker tag greenbox greenbox:for_apps
