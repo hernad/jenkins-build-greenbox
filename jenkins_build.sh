@@ -51,23 +51,28 @@ fi
 echo getting bintray_api_key from jenkins home
 mv ../bintray_api_key .
 
-./build.sh greenbox
-if [ $? != 0 ] ; then
-   echo "greenbox iso build ERROR!"
-   exit 1
+
+GREENBOX_VERSION=`cat GREENBOX_VERSION`
+
+if docker images | grep greenbox | awk '{print $2}' | grep $GREENBOX_VERSION  &&\
+   [ "$(cat ../GREENBOX_VERSION)" == "$GREENBOX_VERSION" ] 
+then
+  echo "greenbox $GREENBOX_VERSION  already built"
+else
+  ./build.sh greenbox
+  if [ $? != 0 ] ; then
+     echo "greenbox iso build ERROR!"
+     exit 1
+  fi
+  ./create_greenbox_iso.sh
+  echo moving iso to jenkins home
+  cp GREENBOX_VERSION ..
+  ./push_iso_boot_to_tftp_server.sh
+  cp greenbox.iso ../greenbox-$(cat GREENBOX_VERSION).iso
+  sha256sum greenbox.iso | awk '{print $1}' > ../greenbox-$(cat GREENBOX_VERSION).iso.sha256sum
 fi
 
-./create_greenbox_iso.sh
-echo moving iso to jenkins home
-cp GREENBOX_VERSION ..
-
-./push_iso_boot_to_tftp_server.sh
 rm .ssh_download_key
-
-
-cp greenbox.iso ../greenbox-$(cat GREENBOX_VERSION).iso
-
-sha256sum greenbox.iso | awk '{print $1}' > ../greenbox-$(cat GREENBOX_VERSION).iso.sha256sum
 
 echo "this image is going to be base for apps"
 
