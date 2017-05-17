@@ -122,6 +122,7 @@ else
 fi
 
 build_app green
+build_app blue
 build_app k8s
 build_app python2
 build_app developer
