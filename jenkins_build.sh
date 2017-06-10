@@ -70,7 +70,7 @@ else
   ./create_greenbox_iso.sh
   echo moving iso to jenkins home
   cp GREENBOX_VERSION ..
-  [ -n "$PUSH_TFTP" && ./push_iso_boot_to_tftp_server.sh
+  [ -n "$PUSH_TFTP" ] && ./push_iso_boot_to_tftp_server.sh
   cp greenbox.iso ../greenbox-$(cat GREENBOX_VERSION).iso
   sha256sum greenbox.iso | awk '{print $1}' > ../greenbox-$(cat GREENBOX_VERSION).iso.sha256sum
 fi
