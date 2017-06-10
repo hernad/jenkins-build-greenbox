@@ -1,7 +1,7 @@
 #!/bin/bash
 
-BRANCH=apps_modular
-PUSH_TFTP=1
+BRANCH=btrfs
+#PUSH_TFTP=1
 
 uname -a
 
