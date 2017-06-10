@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BRANCH=apps_modular
+BRANCH=zfs
 PUSH_TFTP=1
 
 uname -a
