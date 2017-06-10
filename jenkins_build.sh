@@ -1,5 +1,8 @@
 #!/bin/bash
 
+BRANCH=btrfs
+#PUSH_TFTP=1
+
 uname -a
 
 [ -d greenbox ] || git clone https://github.com/hernad/greenbox.git
@@ -38,7 +41,7 @@ fi
 
 cd greenbox
 cp ../.ssh_download_key .
-git checkout apps_modular -f
+git checkout $BRANCH -f
 git pull
 git log -1
 
@@ -67,7 +70,7 @@ else
   ./create_greenbox_iso.sh
   echo moving iso to jenkins home
   cp GREENBOX_VERSION ..
-  ./push_iso_boot_to_tftp_server.sh
+  [ -n "$PUSH_TFTP" && ./push_iso_boot_to_tftp_server.sh
   cp greenbox.iso ../greenbox-$(cat GREENBOX_VERSION).iso
   sha256sum greenbox.iso | awk '{print $1}' > ../greenbox-$(cat GREENBOX_VERSION).iso.sha256sum
 fi
